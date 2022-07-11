@@ -1,1 +1,0 @@
-const test: string = "1234";
