@@ -64,3 +64,33 @@ let addRest = (...numbers: Array<number>) => {
 
 console.log(addRest(5,5,6,10));
 console.log(addRest(3,3))
+
+class Vehicule {
+  wheel = 4;
+}
+
+class Voiture extends Vehicule{
+
+  speed: number;
+
+  move(){
+    console.log("I m moving");
+    
+  }
+  constructor(){
+    super();
+  }
+}
+
+let a = new Voiture();
+
+a.speed = 23;
+
+console.log(a);
+console.log(a.speed);
+console.log(a.wheel);
+a.move();
+
+
+
+
