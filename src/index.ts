@@ -55,3 +55,12 @@ add2 = (nbr1, nbr2) => {
 
 console.log(add2(3,2));
 
+let addRest = (...numbers: Array<number>) => {
+  return numbers.reduce((acc, i) => {
+    acc += i;
+    return acc;
+  },0);
+} ;
+
+console.log(addRest(5,5,6,10));
+console.log(addRest(3,3))
