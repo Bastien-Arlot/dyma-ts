@@ -84,6 +84,13 @@ class Voiture extends Vehicule{
 
 let a = new Voiture();
 
+let b: Voiture;
+
+b = new Voiture();
+
+b.move();
+
+
 a.speed = 23;
 
 console.log(a);
@@ -91,6 +98,27 @@ console.log(a.speed);
 console.log(a.wheel);
 a.move();
 
+interface User {
+  username: string;
+  age: number;
+  isDrinking: boolean;
+  isSmoking: boolean;
+  isHealthy: boolean;
+}
+
+const user: User = {
+  username: "Pierre",
+  age: 30,
+  isDrinking: true,
+  isSmoking: true,
+  isHealthy: true,
+};
+
+function greet(user: { username:string }): void {
+  console.log(`Helloe ${user.username}`);
+}
+
+greet(user);
 
 
 
