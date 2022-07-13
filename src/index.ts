@@ -193,3 +193,30 @@ const newFruit: Fruit = {
 function addItemToCollection<T>(item: T, collection: Array<T>): Array<T> {
   return [...collection, item];
 }
+
+class Stack {
+  items: any[] = [];
+
+  push(item) {
+    this.items.push(item);
+  }
+
+  pop(){
+    this.items.pop();
+  }
+
+  display() {
+    console.log(`${this.items}`);
+    
+  }
+}
+
+const newStack = new Stack();
+console.log("Hello");
+
+newStack.push(1);
+newStack.display();
+newStack.push(3);
+newStack.display();
+newStack.pop();
+newStack.display();
