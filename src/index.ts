@@ -179,3 +179,17 @@ function move(param: Bird | Whale){
     param.swin();
   }
 }
+
+interface Fruit {
+  name: string;
+  price: number;
+}
+
+const newFruit: Fruit = {
+  name: "banana",
+  price: 1,
+}
+
+function addItemToCollection<T>(item: T, collection: Array<T>): Array<T> {
+  return [...collection, item];
+}
