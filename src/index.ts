@@ -99,26 +99,83 @@ console.log(a.wheel);
 a.move();
 
 interface User {
-  username: string;
+  readonly username: string;
   age: number;
-  isDrinking: boolean;
-  isSmoking: boolean;
-  isHealthy: boolean;
+  isDrinking?: boolean;
+  isSmoking?: boolean;
+  isHealthy?: boolean;
+  greeting?: () => void;
+  [moreProperties: string]: any; // permet d'accepter n'importe quel propriété supplémentaire
 }
 
-const user: User = {
+const userA: User = {
   username: "Pierre",
   age: 30,
   isDrinking: true,
   isSmoking: true,
   isHealthy: true,
+  addedProperty: 22,
 };
 
 function greet(user: { username:string }): void {
   console.log(`Helloe ${user.username}`);
 }
 
-greet(user);
+function death(user: User){}
 
+function inShape(user:User){}
 
+const userNotFilled: User = {
+  username: "George",
+  age: 44,
+}
 
+greet(userA);
+
+const immutableArray: readonly number[] = [1, 2, 3];
+
+// On a vu qu'on pouvait type des functions :
+let func1: (param: string) => number;
+
+// On peut aussi typer une function via une interface
+interface Func1Bis{
+  (param: string): number
+};
+
+// On peut également utiliser l'interface pour typer une function
+let func1Ter: Func1Bis = (param) => {
+  return 0;
+}
+
+interface Car {
+  type: 'car';
+  seat: number;
+}
+
+interface Truck {
+  type: 'truck';
+    seat: number;
+    load: (amount:number) => void;
+}
+
+const myvehicule: Car | Truck = {
+  type: 'truck',
+  seat: 4,
+  load: (amount: number): void =>{},
+}
+
+interface Whale {
+  swin: () => void;
+}
+
+interface Bird {
+  fly: () => void;
+}
+
+function move(param: Bird | Whale){
+  if ('fly' in param){
+    param.fly();
+  }else{
+    param.swin();
+  }
+}
