@@ -230,24 +230,80 @@
 //   console.log(target);
 
 // }
-
+function Compononent(target: any) {
+  console.log('in Component');
+  
+}
 function CompononentFactory(param: { template: string; selector: string }) {
   const elem = document.querySelector(param.selector);
   elem.innerHTML = param.template;
+  console.log('in Compononent Factory');
+  
   return (target: any) => {};
 }
+function LogFactory(){
+  console.log('in log factory');
+  return Compononent;
+  
+}
 
-@CompononentFactory({
-  template: "<h1>Hello</h1>",
-  selector: "app",
-})
+function Method(target: any /* Prototype de la méthode */, propName: string, propertyDescriptor: PropertyDescriptor){
+  
+  return {
+    value: function() {
+      if(this.name){
+        console.log('name ok');
+        propertyDescriptor.value.call(this); // Le this doit être call ou bindé car on ne fait plus appel au this du constructuteur mais à celui de la fonction renvoy-e donc sans bind/call = undefined
+        
+      } else {
+        console.log('no name');
+        
+      }
+    }
+  }
+  
+}
+
+
+function Method2(target:any, propName: string, propertyDescriptor: PropertyDescriptor){
+console.log({
+  target,
+  propName,
+  propertyDescriptor
+});
+
+  return{
+
+    
+
+  }
+}
+
+// @LogFactory()
+// @CompononentFactory({
+//   template: "<h1>Hello</h1>",
+//   selector: "app",
+// })
 class MyComponent {
   public name: string;
 
-  constructor(name: string) {
+  @Method
+  public greeting(){
+    console.log('Hello ', this.name);
+  }
+    
+
+    @Method2
+    get fancyName() {
+    return `Hello Monsieur ${this.name}`;
+  }
+
+  constructor(name?: string) {
     this.name = name;
   }
 }
 
 const foo = new MyComponent("Pierre");
 const bar = new MyComponent("Paul");
+
+foo.greeting();
