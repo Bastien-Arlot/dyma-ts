@@ -2,6 +2,8 @@
 // let bar: number = 2;
 // let bool: boolean = false;
 
+import { AnyMxRecord } from "dns";
+
 // const obj: object = {
 //   name: "jean",
 // };
@@ -231,70 +233,75 @@
 
 // }
 function Compononent(target: any) {
-  console.log('in Component');
-  
+  console.log("in Component");
 }
 function CompononentFactory(param: { template: string; selector: string }) {
   const elem = document.querySelector(param.selector);
   elem.innerHTML = param.template;
-  console.log('in Compononent Factory');
-  
+  console.log("in Compononent Factory");
+
   return (target: any) => {};
 }
-function LogFactory(){
-  console.log('in log factory');
+function LogFactory() {
+  console.log("in log factory");
   return Compononent;
-  
 }
 
-function Method(target: any /* Prototype de la méthode */, propName: string, propertyDescriptor: PropertyDescriptor){
-  
+function Method(
+  target: any /* Prototype de la méthode */,
+  propName: string,
+  propertyDescriptor: PropertyDescriptor
+) {
   return {
-    value: function() {
-      if(this.name){
-        console.log('name ok');
+    value: function () {
+      if (this.name) {
+        console.log("name ok");
         propertyDescriptor.value.call(this); // Le this doit être call ou bindé car on ne fait plus appel au this du constructuteur mais à celui de la fonction renvoy-e donc sans bind/call = undefined
-        
       } else {
-        console.log('no name');
-        
+        console.log("no name");
       }
-    }
-  }
+    },
+  };
+}
+
+function Method2(
+  target: any,
+  propName: string,
+  propertyDescriptor: PropertyDescriptor
+) {
+  console.log({
+    target,
+    propName,
+    propertyDescriptor,
+  });
+
+  return {};
+}
+
+function Prop(target: any, propName: string) {
+  console.log({ target, propName });
+}
+function Param(target: any, paramName: string, paramIndex: number){
+  console.log({target, paramName, paramIndex});
   
 }
-
-
-function Method2(target:any, propName: string, propertyDescriptor: PropertyDescriptor){
-console.log({
-  target,
-  propName,
-  propertyDescriptor
-});
-
-  return{
-
-    
-
-  }
-}
-
 // @LogFactory()
 // @CompononentFactory({
 //   template: "<h1>Hello</h1>",
 //   selector: "app",
 // })
 class MyComponent {
+
+  @Prop
   public name: string;
 
   @Method
-  public greeting(){
-    console.log('Hello ', this.name);
+  public greeting(@Param fancy?: boolean) {
+    console.log(`${fancy ? "Hello" : "Hi"} ${this.name}`);
   }
-    
 
-    @Method2
-    get fancyName() {
+  @Method2
+  get fancyName() {
     return `Hello Monsieur ${this.name}`;
   }
 
@@ -306,4 +313,4 @@ class MyComponent {
 const foo = new MyComponent("Pierre");
 const bar = new MyComponent("Paul");
 
-foo.greeting();
+foo.greeting(true);
